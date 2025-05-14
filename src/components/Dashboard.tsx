@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useSubscription } from '@/contexts/SubscriptionContext';
@@ -131,20 +130,20 @@ const Dashboard = () => {
   const dueDateStats = getDueDateStats();
   
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 md:space-y-8">
       <div>
-        <h1 className="text-3xl font-bold">Subscription Dashboard</h1>
-        <p className="text-muted-foreground">Track and manage your subscriptions</p>
+        <h1 className="text-2xl md:text-3xl font-bold">Subscription Dashboard</h1>
+        <p className="text-sm md:text-base text-muted-foreground">Track and manage your subscriptions</p>
       </div>
       
       {subscriptions.length === 0 ? (
         <Card className="bg-muted/50">
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <div className="rounded-full bg-primary/20 p-4 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary h-8 w-8"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
+          <CardContent className="flex flex-col items-center justify-center py-8 md:py-12">
+            <div className="rounded-full bg-primary/20 p-3 md:p-4 mb-3 md:mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary h-6 w-6 md:h-8 md:w-8"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
             </div>
-            <h3 className="text-xl font-semibold mb-2">No Subscriptions Yet</h3>
-            <p className="text-muted-foreground text-center max-w-md mb-6">
+            <h3 className="text-lg md:text-xl font-semibold mb-2">No Subscriptions Yet</h3>
+            <p className="text-sm md:text-base text-muted-foreground text-center max-w-md mb-4 md:mb-6">
               Start tracking your subscriptions by adding your first one.
               You'll be able to monitor payments and get reminders before they're due.
             </p>
@@ -156,43 +155,43 @@ const Dashboard = () => {
       ) : (
         <>
           {/* Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Monthly Spending</CardTitle>
-                <CardDescription>Total recurring payments</CardDescription>
+                <CardTitle className="text-base md:text-lg">Monthly Spending</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Total recurring payments</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold">${totalMonthlyAmount.toFixed(2)}</div>
-                <p className="text-sm text-muted-foreground mt-1">Across {subscriptions.length} subscription{subscriptions.length !== 1 ? 's' : ''}</p>
+                <div className="text-2xl md:text-3xl font-bold">${totalMonthlyAmount.toFixed(2)}</div>
+                <p className="text-xs md:text-sm text-muted-foreground mt-1">Across {subscriptions.length} subscription{subscriptions.length !== 1 ? 's' : ''}</p>
               </CardContent>
             </Card>
             
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Due Payments</CardTitle>
-                <CardDescription>Upcoming subscriptions</CardDescription>
+                <CardTitle className="text-base md:text-lg">Due Payments</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Upcoming subscriptions</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold">{dueDateStats.dueThisWeek}</div>
-                <div className="flex flex-col text-sm text-muted-foreground mt-1">
+                <div className="text-2xl md:text-3xl font-bold">{dueDateStats.dueThisWeek}</div>
+                <div className="flex flex-col text-xs md:text-sm text-muted-foreground mt-1">
                   <span>{dueDateStats.dueToday > 0 ? `${dueDateStats.dueToday} due today` : 'None due today'}</span>
                   <span>{dueDateStats.dueTomorrow > 0 ? `${dueDateStats.dueTomorrow} due tomorrow` : 'None due tomorrow'}</span>
                 </div>
               </CardContent>
             </Card>
             
-            <Card className="bg-gradient-to-br from-primary/20 to-accent/20 border-none">
+            <Card className="bg-gradient-to-br from-primary/20 to-accent/20 border-none sm:col-span-2 md:col-span-1">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Calendar View</CardTitle>
-                <CardDescription>See your payment schedule</CardDescription>
+                <CardTitle className="text-base md:text-lg">Calendar View</CardTitle>
+                <CardDescription className="text-xs md:text-sm">See your payment schedule</CardDescription>
               </CardHeader>
               <CardContent className="flex justify-between items-center">
                 <div>
-                  <div className="text-2xl font-semibold">{format(new Date(), 'MMMM')}</div>
-                  <p className="text-sm mt-1">View your payment calendar</p>
+                  <div className="text-xl md:text-2xl font-semibold">{format(new Date(), 'MMMM')}</div>
+                  <p className="text-xs md:text-sm mt-1">View your payment calendar</p>
                 </div>
-                <Button asChild>
+                <Button asChild size="sm" className="text-xs md:text-sm">
                   <Link to="/calendar">Open Calendar</Link>
                 </Button>
               </CardContent>
@@ -200,19 +199,25 @@ const Dashboard = () => {
           </div>
 
           {/* Charts Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
             <Card>
               <CardHeader>
-                <CardTitle>Monthly Spending Trends</CardTitle>
-                <CardDescription>Your subscription spending over the past 6 months</CardDescription>
+                <CardTitle className="text-base md:text-lg">Monthly Spending Trends</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Your subscription spending over the past 6 months</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="h-[300px]">
+                <div className="h-[250px] md:h-[300px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={monthlySpendings} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                      <XAxis dataKey="month" />
-                      <YAxis tickFormatter={formatCurrency} />
+                      <XAxis dataKey="month" tick={{ fontSize: 12 }} />
+                      <YAxis 
+                        tickFormatter={formatCurrency} 
+                        tick={{ fontSize: 12 }}
+                        width={80}
+                        axisLine={false}
+                        tickLine={false}
+                      />
                       <Tooltip formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Amount']} />
                       <Bar dataKey="amount" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
                     </BarChart>
@@ -223,11 +228,11 @@ const Dashboard = () => {
             
             <Card>
               <CardHeader>
-                <CardTitle>Spending by Category</CardTitle>
-                <CardDescription>How your subscriptions are distributed</CardDescription>
+                <CardTitle className="text-base md:text-lg">Spending by Category</CardTitle>
+                <CardDescription className="text-xs md:text-sm">How your subscriptions are distributed</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="h-[300px]">
+                <div className="h-[250px] md:h-[300px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
@@ -235,7 +240,7 @@ const Dashboard = () => {
                         cx="50%"
                         cy="50%"
                         labelLine={false}
-                        outerRadius={80}
+                        outerRadius={70}
                         fill="#8884d8"
                         dataKey="value"
                         nameKey="name"
@@ -246,7 +251,10 @@ const Dashboard = () => {
                         ))}
                       </Pie>
                       <Tooltip formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Monthly Amount']} />
-                      <Legend formatter={(value, entry) => `${value} (${categoryData.find(item => item.name === value)?.count})`} />
+                      <Legend 
+                        formatter={(value, entry) => `${value} (${categoryData.find(item => item.name === value)?.count})`}
+                        wrapperStyle={{ fontSize: '12px' }}
+                      />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
@@ -262,7 +270,7 @@ const Dashboard = () => {
                   <CardTitle>Upcoming Payments</CardTitle>
                   <CardDescription>Subscriptions due soon</CardDescription>
                 </div>
-                <Tabs value={timeframe} className="w-[400px]" onValueChange={(v) => setTimeframe(v as any)}>
+                <Tabs value={timeframe} className="w-[400px]" onValueChange={(v: '7days' | '30days' | '90days') => setTimeframe(v)}>
                   <TabsList className="grid w-full grid-cols-3">
                     <TabsTrigger value="7days">7 Days</TabsTrigger>
                     <TabsTrigger value="30days">30 Days</TabsTrigger>

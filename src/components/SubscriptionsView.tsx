@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useSubscription } from '@/contexts/SubscriptionContext';
 import SubscriptionCard from './SubscriptionCard';
@@ -45,21 +44,21 @@ const SubscriptionsView = () => {
     });
   
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div className="space-y-4 md:space-y-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Your Subscriptions</h1>
-          <p className="text-muted-foreground">Manage all your subscription services</p>
+          <h1 className="text-2xl md:text-3xl font-bold">Your Subscriptions</h1>
+          <p className="text-sm md:text-base text-muted-foreground">Manage all your subscription services</p>
         </div>
         
-        <Button asChild>
+        <Button asChild size="sm" className="w-full md:w-auto">
           <Link to="/add-subscription">Add Subscription</Link>
         </Button>
       </div>
       
       {/* Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="md:col-span-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        <div className="sm:col-span-2">
           <Input
             placeholder="Search subscriptions..."
             value={searchQuery}
@@ -69,7 +68,7 @@ const SubscriptionsView = () => {
         </div>
         
         <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-          <SelectTrigger>
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Filter by category" />
           </SelectTrigger>
           <SelectContent>
@@ -81,7 +80,7 @@ const SubscriptionsView = () => {
         </Select>
         
         <Select value={billingCycleFilter} onValueChange={setBillingCycleFilter}>
-          <SelectTrigger>
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Filter by billing cycle" />
           </SelectTrigger>
           <SelectContent>
@@ -92,9 +91,9 @@ const SubscriptionsView = () => {
           </SelectContent>
         </Select>
         
-        <div className="md:col-span-3">
+        <div className="sm:col-span-2 md:col-span-3">
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger>
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
@@ -109,16 +108,16 @@ const SubscriptionsView = () => {
       
       {/* Subscriptions List */}
       {filteredAndSortedSubscriptions.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
           {filteredAndSortedSubscriptions.map(subscription => (
             <SubscriptionCard key={subscription.id} subscription={subscription} />
           ))}
         </div>
       ) : (
-        <div className="bg-muted/50 rounded-lg p-8 text-center">
-          <p className="text-muted-foreground mb-2">No subscriptions found</p>
+        <div className="bg-muted/50 rounded-lg p-6 md:p-8 text-center">
+          <p className="text-sm md:text-base text-muted-foreground mb-3 md:mb-4">No subscriptions found</p>
           {searchQuery || categoryFilter !== 'all' || billingCycleFilter !== 'all' ? (
-            <Button variant="outline" onClick={() => {
+            <Button variant="outline" size="sm" onClick={() => {
               setSearchQuery('');
               setCategoryFilter('all');
               setBillingCycleFilter('all');
@@ -126,7 +125,7 @@ const SubscriptionsView = () => {
               Clear Filters
             </Button>
           ) : (
-            <Button asChild>
+            <Button asChild size="sm">
               <Link to="/add-subscription">Add Your First Subscription</Link>
             </Button>
           )}

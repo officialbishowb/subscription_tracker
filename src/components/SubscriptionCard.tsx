@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -55,19 +54,19 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, compa
   
   if (compact) {
     return (
-      <div className="flex items-center justify-between p-3 rounded-lg bg-card border hover:shadow-md transition-all">
+      <div className="flex items-center justify-between p-2 md:p-3 rounded-lg bg-card border hover:shadow-md transition-all">
         <div className="flex items-center">
-          <div className="subscription-logo" style={{ backgroundColor: `${color}20`, color: color }}>
-            <span>{logoText}</span>
+          <div className="subscription-logo w-8 h-8 md:w-10 md:h-10" style={{ backgroundColor: `${color}20`, color: color }}>
+            <span className="text-sm md:text-base">{logoText}</span>
           </div>
-          <div className="ml-3">
-            <h4 className="font-medium">{name}</h4>
-            <p className="text-sm text-muted-foreground">{format(nextPaymentDate, 'MMM d')}</p>
+          <div className="ml-2 md:ml-3">
+            <h4 className="font-medium text-sm md:text-base">{name}</h4>
+            <p className="text-xs md:text-sm text-muted-foreground">{format(nextPaymentDate, 'MMM d')}</p>
           </div>
         </div>
         <div className="text-right">
-          <p className="font-semibold">{currency}{amount.toFixed(2)}</p>
-          <Badge variant={isPaymentSoon() ? "secondary" : isPaymentOverdue() ? "destructive" : "outline"} className="text-xs">
+          <p className="font-semibold text-sm md:text-base">{currency}{amount.toFixed(2)}</p>
+          <Badge variant={isPaymentSoon() ? "secondary" : isPaymentOverdue() ? "destructive" : "outline"} className="text-[10px] md:text-xs">
             {isPaymentOverdue() ? "Overdue" : isPaymentSoon() ? "Soon" : billingCycle}
           </Badge>
         </div>
@@ -80,15 +79,15 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, compa
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           <div className="flex items-center">
-            <div className="subscription-logo mr-3" style={{ backgroundColor: `${color}20`, color: color }}>
-              <span>{logoText}</span>
+            <div className="subscription-logo w-10 h-10 md:w-12 md:h-12 mr-2 md:mr-3" style={{ backgroundColor: `${color}20`, color: color }}>
+              <span className="text-base md:text-lg">{logoText}</span>
             </div>
             <div>
-              <h3 className="font-semibold text-lg">{name}</h3>
-              <p className="text-sm text-muted-foreground">{category}</p>
+              <h3 className="font-semibold text-base md:text-lg">{name}</h3>
+              <p className="text-xs md:text-sm text-muted-foreground">{category}</p>
             </div>
           </div>
-          <Badge variant={isPaymentSoon() ? "secondary" : isPaymentOverdue() ? "destructive" : "outline"}>
+          <Badge variant={isPaymentSoon() ? "secondary" : isPaymentOverdue() ? "destructive" : "outline"} className="text-xs">
             {isPaymentOverdue() ? "Overdue" : isPaymentSoon() ? "Due Soon" : billingCycle}
           </Badge>
         </div>
@@ -96,41 +95,41 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, compa
       
       <CardContent className="pb-2">
         {description && (
-          <p className="text-sm text-muted-foreground mb-2">{description}</p>
+          <p className="text-xs md:text-sm text-muted-foreground mb-2">{description}</p>
         )}
         
         <div className="flex justify-between items-center mt-2">
           <div>
-            <p className="text-sm text-muted-foreground">Next Payment</p>
-            <p className="font-medium">{format(nextPaymentDate, 'MMMM d, yyyy')}</p>
+            <p className="text-xs md:text-sm text-muted-foreground">Next Payment</p>
+            <p className="font-medium text-sm md:text-base">{format(nextPaymentDate, 'MMM d, yyyy')}</p>
           </div>
           <div className="text-right">
-            <p className="text-sm text-muted-foreground">Amount</p>
-            <p className="font-bold text-lg">{currency}{amount.toFixed(2)}</p>
+            <p className="text-xs md:text-sm text-muted-foreground">Amount</p>
+            <p className="font-bold text-base md:text-lg">{currency}{amount.toFixed(2)}</p>
           </div>
         </div>
       </CardContent>
       
       <CardFooter className="pt-2">
         <div className="flex justify-end gap-2 w-full">
-          <Button variant="outline" size="sm" onClick={handleEdit}>
+          <Button variant="outline" size="sm" onClick={handleEdit} className="text-xs md:text-sm">
             Edit
           </Button>
           
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="destructive" size="sm">Delete</Button>
+              <Button variant="destructive" size="sm" className="text-xs md:text-sm">Delete</Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent className="max-w-[90vw] md:max-w-md">
               <AlertDialogHeader>
-                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                <AlertDialogDescription>
+                <AlertDialogTitle className="text-base md:text-lg">Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription className="text-sm md:text-base">
                   This will permanently delete the "{name}" subscription. This action cannot be undone.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+                <AlertDialogCancel className="text-xs md:text-sm">Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleDelete} className="text-xs md:text-sm">Delete</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>

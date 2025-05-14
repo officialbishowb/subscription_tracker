@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
@@ -35,12 +34,10 @@ const Layout = () => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
-        <Sidebar>
+        <Sidebar className="hidden md:block">
           <SidebarHeader className="p-4">
             <div className="flex items-center space-x-2">
-              <div className="bg-gradient-to-r from-primary to-accent rounded-md p-1.5">
-                <span className="font-bold text-white">ST</span>
-              </div>
+                <img src="icons/maskable_icon.svg" alt="SubTrackr" className="w-6 h-6" />
               <h1 className="text-lg font-bold">SubTrackr</h1>
             </div>
           </SidebarHeader>
@@ -53,7 +50,7 @@ const Layout = () => {
                     <SidebarMenuButton asChild>
                       <Link 
                         to="/" 
-                        className={location.pathname === "/" ? "text-primary font-medium" : ""}
+                        className={`flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-accent/50 transition-colors ${location.pathname === "/" ? "text-primary font-medium" : ""}`}
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-layout-dashboard">
                           <rect width="7" height="9" x="3" y="3" rx="1" />
@@ -70,7 +67,7 @@ const Layout = () => {
                     <SidebarMenuButton asChild>
                       <Link 
                         to="/subscriptions" 
-                        className={location.pathname === "/subscriptions" ? "text-primary font-medium" : ""}
+                        className={`flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-accent/50 transition-colors ${location.pathname === "/subscriptions" ? "text-primary font-medium" : ""}`}
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-credit-card">
                           <rect width="20" height="14" x="2" y="5" rx="2" />
@@ -85,7 +82,7 @@ const Layout = () => {
                     <SidebarMenuButton asChild>
                       <Link 
                         to="/calendar" 
-                        className={location.pathname === "/calendar" ? "text-primary font-medium" : ""}
+                        className={`flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-accent/50 transition-colors ${location.pathname === "/calendar" ? "text-primary font-medium" : ""}`}
                       >
                         <Calendar />
                         <span>Calendar</span>
@@ -127,30 +124,34 @@ const Layout = () => {
           </SidebarFooter>
         </Sidebar>
         
-        <div className="flex-1">
+        <div className="flex-1 w-full">
           <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-md border-b border-border h-16 flex items-center px-4 md:px-6">
-            <SidebarTrigger />
+            <SidebarTrigger className="md:hidden" />
+            <div className="flex items-center space-x-2 md:hidden ml-2">
+              <img src="icons/maskable_icon.svg" alt="SubTrackr" className="w-6 h-6" />
+              <h1 className="text-lg font-bold">SubTrackr</h1>
+            </div>
             <div className="ml-auto flex items-center space-x-4">
               <Link
                 to="/add-subscription"
-                className="bg-primary text-primary-foreground rounded-full px-4 py-2 text-sm font-medium hover:bg-primary/90 transition-colors"
+                className="bg-primary text-primary-foreground rounded-full px-3 py-1.5 md:px-4 md:py-2 text-sm font-medium hover:bg-primary/90 transition-colors"
               >
                 Add Subscription
               </Link>
             </div>
           </header>
 
-          <main className="p-4 md:p-6">
+          <main className="p-3 md:p-6 max-w-7xl mx-auto">
             <Outlet />
           </main>
           
           {showScrollButton && (
             <button
               onClick={scrollToTop}
-              className="fixed bottom-4 right-4 bg-primary text-white p-3 rounded-full shadow-lg hover:bg-primary/90 transition-colors z-50"
+              className="fixed bottom-4 right-4 bg-primary text-white p-2.5 md:p-3 rounded-full shadow-lg hover:bg-primary/90 transition-colors z-50"
               aria-label="Scroll to top"
             >
-              <ArrowUp size={20} />
+              <ArrowUp size={18} className="md:w-5 md:h-5" />
             </button>
           )}
         </div>
