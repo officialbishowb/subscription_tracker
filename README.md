@@ -1,6 +1,6 @@
 # # Subscription Tracker
 
-A simple website that helps people track their subscriptions and get notified.
+A simple website that helps people track their subscriptions and get notified when it is due.
 
 
 ## How to run locally
