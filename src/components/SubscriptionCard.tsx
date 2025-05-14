@@ -27,7 +27,8 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, compa
     category, 
     nextPaymentDate,
     logoText,
-    color
+    color,
+    logoUrl
   } = subscription;
   
   const isPaymentSoon = () => {
@@ -80,7 +81,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ subscription, compa
         <div className="flex justify-between items-start">
           <div className="flex items-center">
             <div className="subscription-logo w-10 h-10 md:w-12 md:h-12 mr-2 md:mr-3" style={{ backgroundColor: `${color}20`, color: color }}>
-              <span className="text-base md:text-lg">{logoText}</span>
+              <img src={logoUrl} alt={name} className="w-full h-full object-contain" />
             </div>
             <div>
               <h3 className="font-semibold text-base md:text-lg">{name}</h3>
