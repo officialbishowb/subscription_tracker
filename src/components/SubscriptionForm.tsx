@@ -74,7 +74,10 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ editMode = false, s
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues,
+    defaultValues: {
+      ...defaultValues,
+      currency: "€"
+    } as z.infer<typeof formSchema>
   });
   
   const onSubmit = (data: z.infer<typeof formSchema>) => {
