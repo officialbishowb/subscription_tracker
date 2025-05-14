@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { Subscription, BillingCycle, SubscriptionCategory } from '@/types';
 import { toast } from "sonner";
 import { v4 as uuidv4 } from 'uuid';
@@ -23,11 +23,27 @@ const categoryColors: Record<SubscriptionCategory, string> = {
   [SubscriptionCategory.CLOUD]: "#06b6d4",
   [SubscriptionCategory.FITNESS]: "#f97316",
   [SubscriptionCategory.NEWS]: "#6366f1",
-  [SubscriptionCategory.OTHER]: "#64748b",
+  [SubscriptionCategory.TRAVEL]: "#64748b",
+  [SubscriptionCategory.SHOPPING]: "#64748b",
+  [SubscriptionCategory.SUBSCRIPTION]: "#64748b",
+  [SubscriptionCategory.INTERNET]: "#64748b",
+  [SubscriptionCategory.INSURANCE]: "#64748b",
+  [SubscriptionCategory.OTHER]: "#64748b"
 };
 
 export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+  
+  const getUpcomingPayments = useCallback((days: number): Subscription[] => {
+    const today = new Date();
+    const endDate = new Date();
+    endDate.setDate(today.getDate() + days);
+    
+    return subscriptions.filter(subscription => {
+      const nextPayment = new Date(subscription.nextPaymentDate);
+      return nextPayment >= today && nextPayment <= endDate;
+    }).sort((a, b) => a.nextPaymentDate.getTime() - b.nextPaymentDate.getTime());
+  }, [subscriptions]);
   
   // Load subscriptions from localStorage on initial load
   useEffect(() => {
@@ -37,7 +53,7 @@ export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({ childr
         const parsedSubscriptions = JSON.parse(storedSubscriptions);
         
         // Convert string dates back to Date objects
-        const processedSubscriptions = parsedSubscriptions.map((sub: any) => ({
+        const processedSubscriptions = parsedSubscriptions.map((sub: Subscription) => ({
           ...sub,
           paymentDate: new Date(sub.paymentDate),
           nextPaymentDate: new Date(sub.nextPaymentDate)
@@ -132,7 +148,7 @@ export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({ childr
     const intervalId = setInterval(checkUpcomingPayments, 1000 * 60 * 60 * 6);
     
     return () => clearInterval(intervalId);
-  }, [subscriptions]);
+  }, [subscriptions, getUpcomingPayments]);
   
   const calculateNextPaymentDate = (paymentDate: Date, billingCycle: BillingCycle): Date => {
     const nextDate = new Date(paymentDate);
@@ -218,17 +234,6 @@ export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({ childr
     }, 0);
   };
   
-  const getUpcomingPayments = (days: number): Subscription[] => {
-    const today = new Date();
-    const endDate = new Date();
-    endDate.setDate(today.getDate() + days);
-    
-    return subscriptions.filter(subscription => {
-      const nextPayment = new Date(subscription.nextPaymentDate);
-      return nextPayment >= today && nextPayment <= endDate;
-    }).sort((a, b) => a.nextPaymentDate.getTime() - b.nextPaymentDate.getTime());
-  };
-
   const isNotificationShown = (subscriptions: Subscription[]): boolean => {
     return subscriptions.some(subscription => {
       const notifiedList = localStorage.getItem(`notified_list`);

@@ -78,7 +78,7 @@ const CalendarView = () => {
           <div className="flex justify-between items-center gap-3">
             <div>
               <p className="text-sm text-muted-foreground">Total for {format(currentMonth, 'MMMM yyyy')}</p>
-              <p className="text-xl font-bold">${monthData.totalAmount.toFixed(2)}</p>
+              <p className="text-xl font-bold">€{monthData.totalAmount.toFixed(2)}</p>
             </div>
             
             <Badge variant="outline" className="text-sm">

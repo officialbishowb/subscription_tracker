@@ -29,6 +29,11 @@ export enum SubscriptionCategory {
   CLOUD = "Cloud",
   FITNESS = "Fitness",
   NEWS = "News",
+  TRAVEL = "Travel",
+  SHOPPING = "Shopping",
+  SUBSCRIPTION = "Subscription",
+  INTERNET = "Internet",
+  INSURANCE = "Insurance",
   OTHER = "Other"
 }
 

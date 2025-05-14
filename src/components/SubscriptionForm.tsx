@@ -29,13 +29,14 @@ const formSchema = z.object({
   name: z.string().min(1, "Subscription name is required"),
   description: z.string().optional(),
   amount: z.coerce.number().min(0.01, "Amount must be greater than 0"),
-  currency: z.string().min(1, "Currency is required"),
+  currency: z.literal("€"),
   billingCycle: z.nativeEnum(BillingCycle),
   paymentDate: z.date({
     required_error: "Payment date is required",
   }),
   category: z.nativeEnum(SubscriptionCategory),
   websiteUrl: z.string().url("Please enter a valid URL").or(z.string().length(0)),
+  logoUrl: z.string().optional(),
 });
 
 const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ editMode = false, subscriptionId }) => {
@@ -233,35 +234,10 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ editMode = false, s
                 name="amount"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Amount</FormLabel>
+                    <FormLabel>Amount (€)</FormLabel>
                     <FormControl>
                       <Input type="number" step="0.01" placeholder="9.99" {...field} />
                     </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              
-              <FormField
-                control={form.control}
-                name="currency"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Currency</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select currency" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="€">EUR (€)</SelectItem>
-                        <SelectItem value="$">USD ($)</SelectItem>
-                        <SelectItem value="£">GBP (£)</SelectItem>
-                        <SelectItem value="¥">JPY (¥)</SelectItem>
-                        <SelectItem value="₹">INR (₹)</SelectItem>
-                      </SelectContent>
-                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}

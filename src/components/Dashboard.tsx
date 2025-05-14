@@ -105,7 +105,14 @@ const Dashboard = () => {
   
   // Format currency for charts
   const formatCurrency = (value: number) => {
-    return `$${value.toFixed(2)}`;
+    // Get the most common currency from subscriptions
+    const currencies = subscriptions.map(sub => sub.currency);
+    const mostCommonCurrency = currencies.length > 0 
+      ? currencies.reduce((a, b) => 
+          currencies.filter(v => v === a).length >= currencies.filter(v => v === b).length ? a : b
+        )
+      : '€'; // Default to Euro if no subscriptions
+    return `${mostCommonCurrency}${value.toFixed(2)}`;
   };
   
   // Calculate due dates statistics
@@ -162,7 +169,7 @@ const Dashboard = () => {
                 <CardDescription className="text-xs md:text-sm">Total recurring payments</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl md:text-3xl font-bold">${totalMonthlyAmount.toFixed(2)}</div>
+                <div className="text-2xl md:text-3xl font-bold">{formatCurrency(totalMonthlyAmount)}</div>
                 <p className="text-xs md:text-sm text-muted-foreground mt-1">Across {subscriptions.length} subscription{subscriptions.length !== 1 ? 's' : ''}</p>
               </CardContent>
             </Card>
@@ -218,7 +225,7 @@ const Dashboard = () => {
                         axisLine={false}
                         tickLine={false}
                       />
-                      <Tooltip formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Amount']} />
+                      <Tooltip formatter={(value) => [formatCurrency(Number(value)), 'Amount']} />
                       <Bar dataKey="amount" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
@@ -250,7 +257,7 @@ const Dashboard = () => {
                           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
                       </Pie>
-                      <Tooltip formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Monthly Amount']} />
+                      <Tooltip formatter={(value) => [formatCurrency(Number(value)), 'Monthly Amount']} />
                       <Legend 
                         formatter={(value, entry) => `${value} (${categoryData.find(item => item.name === value)?.count})`}
                         wrapperStyle={{ fontSize: '12px' }}
